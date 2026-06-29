@@ -95,5 +95,4 @@ Puck You is a single-player arena survival experience where pressure builds with
 
 ## 👨‍💻 Developers
 
-### Sixty-Six Studios
 **ლაშა-გიორგი გუგენიშვილი** & **ირაკლი მდინარაძე**
