@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - puck
+  - berserkerDash
+  - border
+  - oneHit
+  - twoHit
+  - Slower
+  - threeHit
+  - campfire
+  - frostbiteDash
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - PuckHitboxes
+  - Enemy
+  - cameraBorders
+  - Slower
+  - Wall
+  - No Post
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Big J
+    uniqueID: 3538802573
+    locked: 0
+  - name: Camp
+    uniqueID: 2806982041
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: OneAboveAll
+    uniqueID: 1621640573
+    locked: 0
+  m_RenderingLayers:
+  - Default
+  m_MigratedRenderPipelines: []

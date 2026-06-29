@@ -1,0 +1,414 @@
+using System;
+using UnityEngine.InputSystem;
+using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.InputSystem.Processors;
+public class PlayerMovement : MonoBehaviour
+{
+    [Header("Movement")]
+
+    [SerializeField] protected float baseSpeed = 10f, nonBaseSpeed, fallBackSpeed;
+    protected bool movementLocked = false;
+    protected Rigidbody2D rb;
+
+
+    [Header("Combat")]
+    [SerializeField] private float attackCooldown;
+    protected bool isAttacking, attackAvailable;
+    protected bool aimLocked = false;
+
+    public bool isQing, isEing, isUlting;
+    protected bool q_onCooldown, e_onCooldown, ult_onCooldown;
+
+    [SerializeField] private GameObject puckPrefab;
+    [SerializeField] protected Transform puckTransform;
+    [SerializeField] protected Animator spinAnimator;
+
+    private Slider[] abilitySliders;
+
+
+    [Header("Controls")]
+
+    [SerializeField] protected InputSystem_Actions pl_controls;
+    [HideInInspector] public InputAction move, jump, attack, ability1, ability2, ulti;
+
+    public Coroutine currentAction;
+
+    [Header("HP")]
+
+    [SerializeField] protected int hp = 100;
+    float hpCurVel = 0f;
+    [SerializeField] private float invTime = 1f;
+    protected bool invincible = false;
+    //private spriteFlashScript sFlash;
+
+
+    [Header("VFX")]
+    [SerializeField]
+    private CamShakerScript shakeCamScript;
+    [SerializeField] private spriteFlashScript sFlash;
+    [SerializeField] private Transform camTarget;   
+
+    [SerializeField] protected ShakeSelfScript shakeSelfScript;
+
+    //Amp, Freq, Time
+    private Vector3 damageShake = new Vector3(3f, 0.2f, 0.1f);
+
+    [Header("Dev")]
+    [SerializeField]
+    private bool godMode = false;
+
+    [Header("Sprite")]
+    [SerializeField] protected GameObject puckHover;
+
+    public static PlayerMovement instance;
+
+    public Slider hpslider;
+
+    public Animator yinulisGamgisAnimator;
+
+    [SerializeField] protected StickHandler stickHandler;
+    [SerializeField] protected Animator spriteAnimator;
+
+
+    [Header("Audio")]
+
+    [SerializeField] private AudioClip[] attackSounds;
+    [SerializeField] private AudioClip damageSound;
+
+    public bool dead;
+
+    public enum PlayerClass {berserker = 0, theWhiteDeath = 1, frostbite = 2}
+    public PlayerClass playerClass;
+
+    protected audioManager audioMgr;
+
+    public GameObject deather;
+
+    public Animator chucker;
+
+    protected virtual void Awake()
+    {
+        hp = 100;
+        gameObject.name = "Player";
+        pl_controls = new InputSystem_Actions();
+        shakeCamScript = GetComponent<CamShakerScript>();
+        instance = this;
+        //sFlash = GetComponent<spriteFlashScript>();
+        attackAvailable = true;
+        isAttacking = false;
+
+        dead = false;
+
+        isQing = false;
+        isEing = false;
+        isUlting = false;
+
+        q_onCooldown = false;
+        e_onCooldown = false;
+        ult_onCooldown = false;
+
+        gameObject.name = "Player";
+
+        hpslider = GameObject.Find("HP").GetComponent<UnityEngine.UI.Slider>();
+        nonBaseSpeed = baseSpeed / 2;
+        fallBackSpeed = baseSpeed;
+
+        yinulisGamgisAnimator = GameObject.Find("YinulisGamge").GetComponent<Animator>();
+
+        chucker = GameObject.Find("NoPPCanvas").GetComponent<Animator>();
+    }
+
+    protected virtual void OnEnable()
+    {
+        move = pl_controls.Player.Move;
+        attack = pl_controls.Player.Attack;
+        InputAction[] inputActions = { move, attack };
+
+        foreach (InputAction action in inputActions)
+        {
+            action.Enable();
+        }
+
+
+        attack.performed += Attack_RegAction;
+    }
+
+    protected virtual void enableAttacksInputs()
+    {
+        InputAction[] inputActions = { ability1, ability2, ulti };
+
+        foreach (InputAction action in inputActions)
+        {
+            action.Enable();
+        }
+    }
+
+
+    private void OnDisable()
+    {
+        InputAction[] inputActions = { move, attack, ability1, ability2, ulti };
+
+        foreach (InputAction action in inputActions)
+        {
+            action.Disable();
+        }
+
+    }
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        audioMgr = audioManager.instance;
+
+        abilitySliders = AbilitySliderController.instance.currSliders;
+
+        CameraManager.instance.cm_Main.Follow = camTarget;
+    }
+
+    protected virtual void Update()
+    {
+        handleHP();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (!movementLocked) handleMovement();
+        if (!aimLocked) handleAim();
+    }
+
+    void handleHP()
+    {
+        hp = Mathf.Clamp(hp, 0, 100);
+        float sliderTarget = hp * 0.79f;
+
+        float currHP = Mathf.SmoothDamp(hpslider.value, sliderTarget, ref hpCurVel, 0.2f);
+        hpslider.value = currHP;
+    }
+
+    void handleAim()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector3 aimDirection = (mousePos - transform.position).normalized;
+        float angle = (Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void handleMovement()
+    {
+        Vector2 moveXY = move.ReadValue<Vector2>();
+
+        if (moveXY != Vector2.zero)
+        {
+            rb.linearVelocity = moveXY * baseSpeed;
+        }
+        else rb.linearDamping = 5;
+
+    }
+
+    //private bool CanDash()
+    //{
+    // return !isDashing && dashAvailable && !isAttacking;
+    //}
+
+    protected virtual bool CanAttack()
+    {
+        return attackAvailable && !isAttacking;
+    }
+
+
+    protected void lockMovement(bool resetSpeed)
+    {
+        movementLocked = true;
+        rb.linearDamping = 0;
+        if (resetSpeed) rb.linearVelocity = Vector3.zero;
+    }
+
+    protected void unlockMovement()
+    {
+        movementLocked = false;
+    }
+
+    private void resetMovement()
+    {
+        rb.linearVelocity = Vector3.zero;
+    }
+
+    private IEnumerator attack_Regular()
+    {
+        if (!CanAttack()) yield break;
+
+
+        attackAvailable = false;
+        isAttacking = true;
+
+        stickHandler.swingAnim();
+        yield return new WaitForSeconds(0.1f);
+
+        //Attack Code
+        GameObject puck = Instantiate(puckPrefab, puckTransform.position, puckTransform.rotation);
+        //puck.GetComponent<PuckScript>().returnObj = gameObject;
+
+        audioMgr.playRandomAudio(attackSounds, 0.35f, 1, transform, audioMgr.sfx);
+
+        puckHover.SetActive(false);
+
+
+        currentAction = null;
+    }
+
+    public IEnumerator puckReturn()
+    {
+        puckHover.SetActive(true);
+
+        isAttacking = false;
+        attackAvailable = true;
+
+        yield return null;
+    }
+
+    private IEnumerator damage(int damage)
+    {
+        invincible = true;
+        hp -= damage;
+        if(hp <= 0)
+        {
+            chucker.SetBool("chuck", true);
+            dead = true;
+            deather.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            Destroy(audioManager.instance.gameObject);
+            yield break;
+        }
+        sFlash.callFlash();
+        shakeCamScript.StartShake(damageShake);
+        audioMgr.playAudio(damageSound, 0.4f, 1, transform, audioMgr.sfx);
+        StartCoroutine(frameStop(0.2f));
+
+        yield return new WaitForSeconds(invTime);
+        invincible = false;
+
+        currentAction = null;
+    }
+
+    private void setHP(int hp)
+    {
+        //set hp code here
+    }
+
+
+    private IEnumerator frameStop(float time)
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1f;
+    }
+
+    private void startAction(IEnumerator action)
+    {
+        if (currentAction != null) return;
+        currentAction = StartCoroutine(action);
+
+    }
+
+    private void handleAttacked()
+    {
+        //if (isBlocking) {
+        //    StartCoroutine(attackBlocked());
+        //}
+        //else damage(4);
+
+    }
+
+
+    protected virtual bool CanQ()
+    {
+        return !q_onCooldown && !isQing;
+    }
+
+    protected virtual bool CanE()
+    {
+        return !e_onCooldown && !isEing;
+    }
+
+    protected virtual bool CanR()
+    {
+        return !ult_onCooldown && !isUlting;
+    }
+
+
+    //      //     //   //    CONTROL METHODS     //      //    //     //
+
+    private void Attack_RegAction(InputAction.CallbackContext callbackContext)
+    {
+        startAction(attack_Regular());
+    }
+
+    protected virtual void Attack_QAction(InputAction.CallbackContext callbackContext)
+    {
+        if (!CanQ()) return;
+    }
+
+    protected virtual void Attack_EAction(InputAction.CallbackContext callbackContext)
+    {
+        if (!CanE()) return;
+    }
+
+    protected virtual void Attack_UltAction(InputAction.CallbackContext callbackContext)
+    {
+        if (!CanR()) return;
+    }
+
+    //      //     //   //    COLLISION METHODS     //      //    //     //
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        String tag = collision.gameObject.tag;
+        /*
+        if (collision.gameObject.CompareTag("attackHitbox"))
+        {
+            if (!invincible && !godMode) handleAttacked();
+        }
+
+        if(collision.gameObject.layer == 7)
+        {
+            startAction(damage(1));
+        }
+        */
+        if (tag.Contains("Hit") && !invincible)
+        {
+            int damageDeal = 0;
+            if (tag.Equals("oneHit")) damageDeal = 4;
+            else if (tag.Equals("twoHit")) damageDeal = 12;
+            else if (tag.Equals("threeHit")) damageDeal = 15;
+            else if (tag.Equals("fourHit")) damageDeal = 18;
+            StartCoroutine(damage(damageDeal));
+            if (collision.gameObject.name != "bite" && collision.gameObject.name != "Punch" && !collision.gameObject.name.Contains("Wendy") && !collision.gameObject.name.Contains("charge") && !collision.gameObject.name.Contains("walk")) Destroy(collision.gameObject);
+        }
+
+        if (tag.Equals("campfire"))
+        {
+            hp += 45;
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Slower")
+        {
+            yinulisGamgisAnimator.Play("IceFadeIn");
+            baseSpeed = nonBaseSpeed;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Slower")
+        {
+            yinulisGamgisAnimator.Play("IceFadeOut");
+            baseSpeed = fallBackSpeed;
+        }
+    }
+}

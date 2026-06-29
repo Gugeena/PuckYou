@@ -1,0 +1,213 @@
+using System;
+using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class EnemyScript : MonoBehaviour
+{
+    protected Vector2 direction;
+    protected Transform player;
+    protected Rigidbody2D rb;
+    protected Animator animator;
+    protected float speed, rangeDistance;
+    protected float angleToTarget, fov = 1, rotationSpeed = 270f;
+    protected float distance;
+    protected bool canAttack = true, isAttacking, shouldRotate = true, awake;
+    public GameObject deathParticles;
+    public SpriteRenderer spriteRenderer;
+    public int RangeMinus, RangeMaximum;
+    public bool shouldRandomize;
+    public GameObject Krampus;
+    public spriteFlashScript spriteFlash;
+    public int hp;
+    bool isDead;
+
+    protected AudioClip[] deathSound;
+    [SerializeField] protected AudioClip damageSound;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteFlash = GetComponent<spriteFlashScript>();
+    }
+
+    protected virtual void Start()
+    {
+        if(shouldRandomize) spriteRenderer.sortingOrder = UnityEngine.Random.Range(RangeMinus, RangeMaximum);
+        player = PlayerMovement.instance.gameObject.transform;
+        if(EnemyManager.instance != null) EnemyManager.instance.Enemies.Add(gameObject);
+        snapAtTarget(player);
+        StartCoroutine(wakeUp());
+        SetupSubscriptionToCaptainCaramel();
+        isDead = false;
+    }
+
+    private void OnDestroy()
+    {
+         EnemyManager.instance.Enemies.Remove(gameObject);
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (!awake) return;
+        updateTargetData(player);
+        Movement();
+    }
+
+    public virtual void Movement()
+    {
+        if (shouldRotate) lookAt(angleToTarget);
+
+        if (isAttacking || !isLookingAt())
+        {
+            halt();
+            return;
+        }
+
+
+        if (distance > rangeDistance)
+        {
+            animator.SetBool("isIdling", true);
+            rb.linearVelocity = direction * speed;
+        }
+        else
+        {
+            if (!isAttacking && canAttack)
+            {
+                Attack();
+            }
+        }
+    }
+
+    /*
+    public void setDistDirAngle()
+    {
+        distance = getDistance();
+        direction = getDirection(player);
+    }
+    */
+
+    public void updateTargetData(Transform target)
+    {
+        direction = getDirection(target);
+        distance = getDistance(target);
+        angleToTarget = getAngle(direction);
+    }
+
+    public Vector2 getDirection(Transform target)
+    {
+        return (target.position - transform.position).normalized;
+    }
+
+    public float getDistance(Transform target)
+    {
+        return Vector2.Distance(transform.position, target.position); 
+    }
+
+    public float getAngle(Vector2 direction)
+    {
+        return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; ;
+    }
+
+    public void setSpeedAndRange(float speed, float rangeDistance)
+    {
+        this.speed = speed;
+        this.rangeDistance = rangeDistance;
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("collided");
+        /*
+        if (collision.gameObject.tag.Equals("puck"))
+        {
+            PuckScript puckscript = collision.gameObject.GetComponent<PuckScript>();
+            damage(puckscript.damage);
+        }
+        */
+    }
+
+    protected void lookAt(float targetAngle)
+    {
+        float currentAngle = transform.eulerAngles.z;
+        float newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
+        rb.rotation = newAngle;
+    }
+
+    protected void snapAtTarget(Transform target)
+    {
+        updateTargetData(target);
+        rb.rotation = angleToTarget;
+    }
+
+    protected bool isLookingAt()
+    {
+        float angleBeetwen = Vector2.Angle(transform.right, direction);
+        return angleBeetwen < (fov / 2f);
+    }
+
+    protected IEnumerator wakeUp()
+    {
+        yield return new WaitForSeconds(0.2f);
+        awake = true;
+        yield break;
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
+
+    protected virtual void Attack()
+    {
+        isAttacking = true;
+        canAttack = false;
+        animator.SetBool("isIdling", false);
+        StartCoroutine(AttackCrt());
+    }
+
+    protected virtual IEnumerator AttackCrt()
+    {
+        yield return null;
+    }
+
+    protected virtual void death()
+    {
+        if (isDead) return;
+        isDead = true;
+        audioManager.instance.playRandomAudio(deathSound, 0.45f, 1, transform, audioManager.instance.sfx);
+        Instantiate(deathParticles, this.transform.position, Quaternion.identity);
+        EnemyManager.instance.incrimentDeath();
+        Destroy(gameObject);
+    }
+
+    public virtual void damage(int damage)
+    {
+        audioManager.instance.playAudio(damageSound, 0.45f, 1, transform, audioManager.instance.sfx);
+
+        hp -= damage;
+        if (hp <= 0)
+        {
+            death();
+            return;
+        }
+        spriteFlash.callFlash();
+    }
+
+    public void halt()
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    private void SetupSubscriptionToCaptainCaramel()
+    {
+        if(EnemyManager.instance != null) EnemyManager.instance.bossfightStartedEv += OnBossStartKill;
+    }
+
+    private void OnBossStartKill()
+    {
+        if (this == null) return;
+        death();
+    }
+}

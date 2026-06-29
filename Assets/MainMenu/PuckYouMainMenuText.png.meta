@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 28143e609991d614eaa2ff65675da577
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5139341698906005116
+    second: PuckYouMainMenuText_0
+  - first:
+      213: 2029356621258797997
+    second: PuckYouMainMenuText_1
+  - first:
+      213: 8076671931312126046
+    second: PuckYouMainMenuText_2
+  - first:
+      213: 8830955591778517137
+    second: PuckYouMainMenuText_3
+  - first:
+      213: -9020116171315850482
+    second: PuckYouMainMenuText_4
+  - first:
+      213: -6968919642386478224
+    second: PuckYouMainMenuText_5
+  - first:
+      213: -449508529713313372
+    second: PuckYouMainMenuText_6
+  - first:
+      213: -3350898328833898487
+    second: PuckYouMainMenuText_7
+  - first:
+      213: 4042290742517780756
+    second: PuckYouMainMenuText_8
+  - first:
+      213: -5782616894470007717
+    second: PuckYouMainMenuText_9
+  - first:
+      213: 366083095491699919
+    second: PuckYouMainMenuText_10
+  - first:
+      213: -5852950508867541922
+    second: PuckYouMainMenuText_11
+  - first:
+      213: -1403021391341275472
+    second: PuckYouMainMenuText_12
+  - first:
+      213: 4110679807395521371
+    second: PuckYouMainMenuText_13
+  - first:
+      213: -5719564245255689920
+    second: PuckYouMainMenuText_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_0
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 15
+        width: 161
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7e15a6bb0c925740800000000000000
+      internalID: 5139341698906005116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_1
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 89
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da3b7b45819b92c10800000000000000
+      internalID: 2029356621258797997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 83
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e583a39545a161070800000000000000
+      internalID: 8076671931312126046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_3
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 93
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1904533825bdd8a70800000000000000
+      internalID: 8830955591778517137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_4
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 83
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0356fff12c12d280800000000000000
+      internalID: -9020116171315850482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 18
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07bcf47128c694f90800000000000000
+      internalID: -6968919642386478224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_6
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 18
+        width: 51
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a90ee2bf5603c9f0800000000000000
+      internalID: -449508529713313372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_7
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 18
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 908c76749b73f71d0800000000000000
+      internalID: -3350898328833898487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_8
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 18
+        width: 49
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4115f9a630a191830800000000000000
+      internalID: 4042290742517780756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_9
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 9
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5451f4729400cfa0800000000000000
+      internalID: -5782616894470007717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_10
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 8
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc4ee01c2a6941500800000000000000
+      internalID: 366083095491699919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_11
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 11
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e54220fb58426cea0800000000000000
+      internalID: -5852950508867541922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_12
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 19
+        width: 27
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b634d46a77778ce0800000000000000
+      internalID: -1403021391341275472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_13
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 4
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b536e2961811c0930800000000000000
+      internalID: 4110679807395521371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PuckYouMainMenuText_14
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 0
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 049628b5f9600a0b0800000000000000
+      internalID: -5719564245255689920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PuckYouMainMenuText_0: 5139341698906005116
+      PuckYouMainMenuText_1: 2029356621258797997
+      PuckYouMainMenuText_10: 366083095491699919
+      PuckYouMainMenuText_11: -5852950508867541922
+      PuckYouMainMenuText_12: -1403021391341275472
+      PuckYouMainMenuText_13: 4110679807395521371
+      PuckYouMainMenuText_14: -5719564245255689920
+      PuckYouMainMenuText_2: 8076671931312126046
+      PuckYouMainMenuText_3: 8830955591778517137
+      PuckYouMainMenuText_4: -9020116171315850482
+      PuckYouMainMenuText_5: -6968919642386478224
+      PuckYouMainMenuText_6: -449508529713313372
+      PuckYouMainMenuText_7: -3350898328833898487
+      PuckYouMainMenuText_8: 4042290742517780756
+      PuckYouMainMenuText_9: -5782616894470007717
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
