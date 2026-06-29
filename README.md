@@ -1,4 +1,4 @@
-# 🧊 Puck You
+# 🧊 P#CK YOU!
 
 > **Welcome to the coldest, most chaotic ice rink you’ll ever step onto.**
 
